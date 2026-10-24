@@ -1,5 +1,6 @@
 package com.codecart.coffee.base;
 
+import com.codecart.coffee.mocks.StubSupport;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -42,6 +43,7 @@ public class BaseTest {
     @BeforeMethod
     public void resetStubs() {
         wireMockServer.resetAll();
+        StubSupport.registerDefaults(wireMockServer);
     }
 
 
