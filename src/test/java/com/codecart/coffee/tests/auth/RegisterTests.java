@@ -3,7 +3,7 @@ package com.codecart.coffee.tests.auth;
 import com.codecart.coffee.base.BaseTest;
 import com.codecart.coffee.clients.auth.RegisterApi;
 import com.codecart.coffee.data.RegisterFactory;
-import com.codecart.coffee.mocks.AuthStubs;
+import com.codecart.coffee.mocks.RegisterStubs;
 import com.codecart.coffee.models.auth.register.RegisterRequest;
 import com.codecart.coffee.models.auth.register.RegisterResponse;
 import io.restassured.response.Response;
@@ -33,7 +33,7 @@ public class RegisterTests extends BaseTest {
 
     @Test(dataProvider = "validRegisterRequests", groups = {"smoke", "regression"})
     public void register_withValidData_returns201(String caseName, RegisterRequest request) {
-        AuthStubs.register(wireMockServer);
+        RegisterStubs.register(wireMockServer);
 
         Response response = registerApi.register(request);
 
@@ -67,7 +67,7 @@ public class RegisterTests extends BaseTest {
     @Test(dataProvider = "passwordCases", groups = {"regression"})
     public void register_withPasswordCase_returnsExpectedStatus(String caseName, String password,
                                                                 int expectedStatus) {
-        AuthStubs.register(wireMockServer);
+        RegisterStubs.register(wireMockServer);
 
         Response response = registerApi.register(RegisterFactory.withPassword(password));
 
@@ -94,7 +94,7 @@ public class RegisterTests extends BaseTest {
     @Test(dataProvider = "invalidRegisterRequests", groups = {"regression"})
     public void register_withInvalidData_returnsError(String caseName, RegisterRequest request,
                                                       int expectedStatus, String expectedCode) {
-        AuthStubs.register(wireMockServer);
+        RegisterStubs.register(wireMockServer);
 
         Response response = registerApi.register(request);
 
@@ -118,7 +118,7 @@ public class RegisterTests extends BaseTest {
 
     @Test(dataProvider = "existingEmails", groups = {"regression"})
     public void register_withExistingEmail_returns409(String email) {
-        AuthStubs.register(wireMockServer);
+        RegisterStubs.register(wireMockServer);
 
         Response response = registerApi.register(RegisterFactory.withEmail(email));
 
@@ -133,7 +133,7 @@ public class RegisterTests extends BaseTest {
 
     @Test(groups = {"regression"})
     public void register_withValidData_matchesSchema() {
-        AuthStubs.register(wireMockServer);
+        RegisterStubs.register(wireMockServer);
 
         Response response = registerApi.register(RegisterFactory.validRegisterPayload());
 

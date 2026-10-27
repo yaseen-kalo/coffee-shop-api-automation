@@ -11,11 +11,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 /**
  * Stubs for the auth endpoints.
  */
-public final class AuthStubs {
+public final class RegisterStubs {
 
     private static final String REGISTER_URL = "/auth/register";
 
-    private AuthStubs() {
+    private RegisterStubs() {
     }
 
     public static void register(WireMockServer server) {
