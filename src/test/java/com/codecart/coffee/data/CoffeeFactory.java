@@ -59,4 +59,18 @@ public final class CoffeeFactory {
     public static Coffee withoutStock() {
         return withStock(null);
     }
+
+    /** The coffee created in the admin flow. */
+    public static Coffee flowCoffee() {
+        return withName("Flow Coffee");
+    }
+
+    /** The same coffee after the update step. */
+    public static Coffee flowCoffeeUpdated() {
+        Coffee coffee = validCoffee();
+        coffee.setName("Flow Coffee Updated");
+        coffee.setType("ESPRESSO_BASED");
+        coffee.setPrice(5.50);
+        return coffee;
+    }
 }
