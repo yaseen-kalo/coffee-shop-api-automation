@@ -2,6 +2,7 @@ package com.codecart.coffee.tests.coffees;
 
 import com.codecart.coffee.base.BaseTest;
 import com.codecart.coffee.clients.coffees.CoffeeApi;
+import com.codecart.coffee.data.AuthDataProviders;
 import com.codecart.coffee.mocks.CoffeeStubs;
 import com.codecart.coffee.models.coffees.Coffee;
 import com.codecart.coffee.utils.Tokens;
@@ -112,16 +113,7 @@ public class GetCoffeesTests extends BaseTest {
 
     // ---------- Bad tokens ----------
 
-    @DataProvider(name = "badTokens")
-    public Object[][] badTokens() {
-        return new Object[][]{
-                {"no token", null, "INVALID_TOKEN"},
-                {"unknown token", "bad-token", "INVALID_TOKEN"},
-                {"expired token", Tokens.EXPIRED, "TOKEN_EXPIRED"}
-        };
-    }
-
-    @Test(dataProvider = "badTokens", groups = {"regression"})
+    @Test(dataProvider = "badTokens", dataProviderClass = AuthDataProviders.class, groups = {"regression"})
     public void getCoffees_withBadToken_returns401(String caseName, String token, String expectedCode) {
         Response response = coffeeApi.getCoffees(token, null);
 

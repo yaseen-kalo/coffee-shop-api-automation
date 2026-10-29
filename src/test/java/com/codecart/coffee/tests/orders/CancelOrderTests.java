@@ -2,6 +2,7 @@ package com.codecart.coffee.tests.orders;
 
 import com.codecart.coffee.base.BaseTest;
 import com.codecart.coffee.clients.orders.OrderApi;
+import com.codecart.coffee.data.AuthDataProviders;
 import com.codecart.coffee.mocks.OrderStubs;
 import com.codecart.coffee.models.orders.Order;
 import com.codecart.coffee.utils.Tokens;
@@ -78,16 +79,7 @@ public class CancelOrderTests extends BaseTest {
         softAssert.assertAll();
     }
 
-    @DataProvider(name = "badTokens")
-    public Object[][] badTokens() {
-        return new Object[][]{
-                {"no token", null, "INVALID_TOKEN"},
-                {"unknown token", "bad-token", "INVALID_TOKEN"},
-                {"expired token", Tokens.EXPIRED, "TOKEN_EXPIRED"}
-        };
-    }
-
-    @Test(dataProvider = "badTokens", groups = {"regression"})
+    @Test(dataProvider = "badTokens", dataProviderClass = AuthDataProviders.class, groups = {"regression"})
     public void cancelOrder_withBadToken_returns401(String caseName, String token, String expectedCode) {
         Response response = orderApi.cancelOrder(token, "1");
 
