@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "status", "items", "total"],
+    "properties": {
+      "id": { "type": "integer" },
+      "status": { "type": "string", "enum": ["PLACED", "PREPARING", "READY", "COMPLETED", "CANCELLED"] },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["coffeeId", "quantity"],
+          "properties": {
+            "coffeeId": { "type": "integer" },
+            "quantity": { "type": "integer" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "total": { "type": "number" }
+    },
+    "additionalProperties": false
+  }
+}
