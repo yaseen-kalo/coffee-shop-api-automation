@@ -2,6 +2,7 @@ package com.codecart.coffee.tests.auth;
 
 import com.codecart.coffee.base.BaseTest;
 import com.codecart.coffee.clients.auth.MeApi;
+import com.codecart.coffee.data.AuthDataProviders;
 import com.codecart.coffee.mocks.MeStubs;
 import com.codecart.coffee.models.auth.me.MeResponse;
 import com.codecart.coffee.utils.Tokens;
@@ -48,22 +49,12 @@ public class MeTests extends BaseTest {
 
     // ---------- Bad tokens ----------
 
-    @DataProvider(name = "badTokens")
-    public Object[][] badTokens() {
-        return new Object[][]{
-                {"no token", null, 401, "INVALID_TOKEN"},
-                {"unknown token", "bad-token", 401, "INVALID_TOKEN"},
-                {"expired token", Tokens.EXPIRED, 401, "TOKEN_EXPIRED"}
-        };
-    }
-
-    @Test(dataProvider = "badTokens", groups = {"regression"})
-    public void me_withBadToken_returns401(String caseName, String token,
-                                           int expectedStatus, String expectedCode) {
+    @Test(dataProvider = "badTokens", dataProviderClass = AuthDataProviders.class, groups = {"regression"})
+    public void me_withBadToken_returns401(String caseName, String token, String expectedCode) {
         Response response = meApi.me(token);
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(response.statusCode(), expectedStatus, "Status mismatch for: " + caseName);
+        softAssert.assertEquals(response.statusCode(), 401, "Status mismatch for: " + caseName);
         softAssert.assertEquals(response.jsonPath().getString("code"), expectedCode,
                 "Error code mismatch for: " + caseName);
         softAssert.assertAll();
