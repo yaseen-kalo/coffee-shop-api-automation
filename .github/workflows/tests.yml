@@ -1,10 +1,15 @@
 name: Tests
 
-on: push
+on:
+  push:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Get the code
         uses: actions/checkout@v4
@@ -17,4 +22,11 @@ jobs:
           cache: maven
 
       - name: Run tests
-        run: mvn -B clean test
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$GITHUB_REF_NAME" != "master" ]; then
+            echo "Branch push: running smoke tests only"
+            mvn -B clean test -Dgroups=smoke
+          else
+            echo "Merge to master, nightly or manual run: running all tests"
+            mvn -B clean test
+          fi
