@@ -41,6 +41,24 @@ public class CoffeeApi {
                 .delete("/coffees/" + id);
     }
 
+    public Response getCoffees(String token, String type) {
+        RequestSpecification request = withAuth(token);
+
+        if (type != null) {
+            request.queryParam("type", type);
+        }
+
+        return request
+                .when()
+                .get("/coffees");
+    }
+
+    public Response getCoffeeById(String token, String id) {
+        return withAuth(token)
+                .when()
+                .get("/coffees/" + id);
+    }
+
     private RequestSpecification withAuth(String token) {
         RequestSpecification request = given();
 
