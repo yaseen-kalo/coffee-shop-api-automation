@@ -9,24 +9,23 @@ import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.mapper.ObjectMapperType;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 /**
  * Parent class for all tests.
  * Starts one WireMock server before the suite and stops it after.
  * Points Rest Assured to the mock server and forces Gson.
  * Resets all stubs before each test, so tests do not affect each other.
+ * Setup methods use alwaysRun, so they also run when tests are filtered by group.
  */
-
 public class BaseTest {
 
     /** Shared by all test classes, so stubs can be added from any test. */
     protected static WireMockServer wireMockServer;
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void startServer() {
-
         wireMockServer = new WireMockServer(WireMockConfiguration.options().dynamicPort());
         wireMockServer.start();
 
@@ -40,15 +39,13 @@ public class BaseTest {
                         .defaultObjectMapperType(ObjectMapperType.GSON));
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void resetStubs() {
         wireMockServer.resetAll();
         StubSupport.registerDefaults(wireMockServer);
     }
 
-
-
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     public void stopServer() {
         if (wireMockServer != null) {
             wireMockServer.stop();

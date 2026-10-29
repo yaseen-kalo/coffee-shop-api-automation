@@ -47,4 +47,8 @@ public final class LoginFactory {
         loginRequest.setPassword(null);
         return loginRequest;
     }
+
+    public static LoginRequest validAdminLogin() {
+        return withCredentials("admin@coffee.com", "Admin@123");
+    }
 }

@@ -71,4 +71,8 @@ public final class OrderFactory {
         item.setQuantity(quantity);
         return item;
     }
+
+    public static Order withCoffeeAndQuantity(Integer coffeeId, Integer quantity) {
+        return orderWith(line(coffeeId, quantity));
+    }
 }
