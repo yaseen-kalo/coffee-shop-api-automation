@@ -4,6 +4,7 @@ import com.codecart.coffee.mocks.StubSupport;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -37,6 +38,8 @@ public class BaseTest {
                 .objectMapperConfig(ObjectMapperConfig
                         .objectMapperConfig()
                         .defaultObjectMapperType(ObjectMapperType.GSON));
+
+        RestAssured.filters(new AllureRestAssured());
     }
 
     @BeforeMethod(alwaysRun = true)
