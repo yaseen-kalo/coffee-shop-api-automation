@@ -3,7 +3,7 @@ name: Tests
 on:
   push:
   schedule:
-    - cron: '0 11 * * *'
+    - cron: '20 11 * * *'
   workflow_dispatch:
 
 jobs:
