@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "type", "price", "stock"],
+    "properties": {
+      "id": { "type": "integer" },
+      "name": { "type": "string" },
+      "type": { "type": "string", "enum": ["BLACK", "WHITE", "ESPRESSO_BASED", "COLD", "DECAF"] },
+      "price": { "type": "number" },
+      "stock": { "type": "integer" }
+    },
+    "additionalProperties": false
+  }
+}
