@@ -30,3 +30,10 @@ jobs:
             echo "Merge to master, nightly or manual run: running all tests"
             mvn -B clean test
           fi
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results
+          if-no-files-found: ignore
