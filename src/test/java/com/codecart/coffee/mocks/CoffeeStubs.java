@@ -240,7 +240,7 @@ public final class CoffeeStubs {
                         + ",\"name\":\"{{jsonPath request.body '$.name'}}\""
                         + ",\"type\":\"{{jsonPath request.body '$.type'}}\""
                         + ",\"price\":{{jsonPath request.body '$.price'}}"
-                        + ",\"stock\":{{jsonPath request.body '$.stock'}}}")
+                        + ",\"stock\":{{jsonPath request.body '$.stock'}} }")
                 .withTransformers("response-template");
     }
 
@@ -267,6 +267,6 @@ public final class CoffeeStubs {
 
     private static String coffeeJsonWithStock(String[] c, String stock) {
         return "{\"id\":" + c[0] + ",\"name\":\"" + c[1] + "\",\"type\":\"" + c[2]
-                + "\",\"price\":" + c[3] + ",\"stock\":" + stock + "}";
+                + "\",\"price\":" + c[3] + ",\"stock\":" + stock + " }";
     }
 }
